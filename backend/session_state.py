@@ -172,6 +172,12 @@ class SessionState:
         self.etco2  = safe_col(resolved["etco2"])
         self.abp    = safe_col(resolved["abp"])
 
+        self.log("Plot-to-column mapping:")
+        self.log(f"  Envelope Velocity plot -> {self.raw_headers[resolved['env_u']]}")
+        self.log(f"  Mean Velocity plot     -> {self.raw_headers[resolved['mean_u']]}")
+        self.log(f"  ABP plot              -> {self.raw_headers[resolved['abp']]}")
+        self.log(f"  ETCO2 plot            -> {self.raw_headers[resolved['etco2']]}")
+
         # parse marks – locate by name ("mark"), else fall back to last column
         mark_col_idx = find_column(self.raw_headers, "mark")
         if mark_col_idx is None:
