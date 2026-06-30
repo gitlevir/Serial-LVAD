@@ -610,6 +610,10 @@ def api_edit_nan():
     if arr is None or len(arr) == 0:
         return jsonify({"error": f"Signal '{signal}' is empty"}), 400
 
+    if not arr.flags.writeable:
+        arr = arr.copy()
+        setattr(state, EDITABLE_SIGNALS[signal], arr)
+
     total_changed = 0
     for r in ranges:
         try:
