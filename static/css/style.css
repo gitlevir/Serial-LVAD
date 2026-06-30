@@ -377,6 +377,10 @@ body {
 }
 
 .marks-panel .marks-header {
+   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
   padding: 10px 14px;
   font-size: .78rem;
   font-weight: 600;
@@ -387,6 +391,31 @@ body {
   background: var(--bg);
 }
 
+.marks-panel .marks-header span {
+  flex: 1;
+}
+
+.marks-toggle {
+  border: none;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: .72rem;
+  font-weight: 600;
+  padding: 0;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.marks-toggle:hover {
+  text-decoration: underline;
+}
+
+.marks-toggle:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  text-decoration: none;
+}
 .marks-list {
   max-height: 220px;
   overflow-y: auto;
