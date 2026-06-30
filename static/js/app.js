@@ -158,6 +158,7 @@ $('fileInput').addEventListener('change', async (e) => {
 
 function populateMarks(prefix, data) {
   const container = $(prefix + 'MarksList');
+   const toggleBtn = $(prefix + 'MarksToggle');
   container.innerHTML = '';
   data.marks_labels.forEach((label, i) => {
     const lbl = document.createElement('label');
@@ -173,6 +174,34 @@ function populateMarks(prefix, data) {
     lbl.append(cb, text, timeSpan);
     container.appendChild(lbl);
   });
+   
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const shouldCheck = !Array.from(container.querySelectorAll('input[type="checkbox"]')).every(cb => cb.checked);
+      setAllMarks(prefix, shouldCheck);
+    });
+  }
+
+  updateMarksToggleButton(prefix);
+}
+
+function updateMarksToggleButton(prefix) {
+  const toggleBtn = $(prefix + 'MarksToggle');
+  if (!toggleBtn) return;
+
+  const container = $(prefix + 'MarksList');
+  const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+  const allChecked = checkboxes.length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+  toggleBtn.textContent = allChecked ? 'Uncheck all' : 'Check all';
+  toggleBtn.disabled = checkboxes.length === 0;
+}
+
+function setAllMarks(prefix, checked) {
+  const container = $(prefix + 'MarksList');
+  container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.checked = checked;
+  });
+  toggleMarks(prefix);
 }
 
 function toggleMarks(prefix) {
@@ -183,6 +212,7 @@ function toggleMarks(prefix) {
   });
   if (prefix === 'ca') caCharts.updateMarks(visible);
   else cvrCharts.updateMarks(visible);
+  updateMarksToggleButton(prefix);
 }
 
 
